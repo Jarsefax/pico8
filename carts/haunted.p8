@@ -8,13 +8,13 @@ __lua__
 
 -- todo:s
 
--- splash screen grafix
--- splash screen timer
+-- splash screen
+-- dark house
+-- lightning shows it
+-- title comes up
 
 -- menu grfx
--- start menu option
--- controls menu option
--- progress display in menu
+-- ??? menu option
 
 -- intro text
 -- intro timer
@@ -29,9 +29,14 @@ state=0
 -- 2: intro
 -- 3: game
 
-function _init()
+splash_timer=0
 
-end
+menu_state=0
+
+endings={false,false,false,false}
+
+--function _init()
+--end
 -->8
 -- update stuff
 
@@ -39,15 +44,18 @@ function _update()
  if state==0 then update_splash()
  elseif state==1 then update_menu()
  elseif state==2 then update_intro()
- elseif state==3 then update_game()
+ elseif state==3 then update_game() end
 end
 
 function update_splash()
-
+ if splash_timer<15 then splash_timer+=1
+ else state=1 end
 end
 
 function update_menu()
-
+ if menu_state==0 and btn(⬇️) then menu_state=1
+ elseif menu_state==1 and btn(⬆️) then menu_state=0
+ elseif menu_state==0 and btn(🅾️) then state=2 end
 end
 
 function update_intro()
@@ -61,22 +69,43 @@ end
 -- draw stuff
 
 function _draw()
+ cls()
+ 
  if state==0 then draw_splash()
  elseif state==1 then draw_menu()
  elseif state==2 then draw_intro()
- elseif state==3 then draw_game()
+ elseif state==3 then draw_game() end
 end
 
 function draw_splash()
-
+ print("splash, a-ah")
 end
 
 function draw_menu()
-
+ if menu_state==0 then
+  print("-> start",10,100,6)
+  print("   ???",10,110,5)
+ else
+  print("   start",10,90,5)
+  print("-> ???",10,100,6)
+ end
+ 
+ print("endings: ",10,120,7)
+ if endings[1] then circfill(60,122,4,8)
+ else circ(60,122,4,8) end
+ 
+ if endings[2] then circfill(75,122,4,9)
+ else circ(75,122,4,9) end
+ 
+ if endings[3] then circfill(90,122,4,10)
+ else circ(90,122,4,10) end
+ 
+ if endings[4] then circfill(105,122,4,11)
+ else circ(105,122,4,11) end
 end
 
 function draw_intro()
-
+ print("introooo")
 end
 
 function draw_game()
