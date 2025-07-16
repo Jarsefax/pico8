@@ -17,13 +17,13 @@ __lua__
 -- ??? menu option
 
 -- intro text
--- intro timer
+-- intro text animation
 
 -- game stufz
 -->8
 -- init stuff
 
-state=0
+state=2
 -- 0: splash
 -- 1: menu
 -- 2: intro
@@ -59,7 +59,7 @@ function update_menu()
 end
 
 function update_intro()
-
+ if btn() > 0 then state=3 end
 end
 
 function update_game()
@@ -83,8 +83,8 @@ end
 
 function draw_menu()
  if menu_state==0 then
-  print("-> start",10,100,6)
-  print("   ???",10,110,5)
+  print("-> start",10,90,6)
+  print("   ???",10,100,5)
  else
   print("   start",10,90,5)
   print("-> ???",10,100,6)
@@ -105,7 +105,22 @@ function draw_menu()
 end
 
 function draw_intro()
- print("introooo")
+ cls(1)
+ color(13)
+ 
+ print("you are a pshycic, waking up",7,10)
+ print("behind the wheel of your",7,18)
+ print("crashed car.",7,26)
+ 
+ print("you see country side and a",7,42)
+ print("large mansion outside.",7,50)
+ 
+ print("and your sister is not in the",7,58)
+ print("passenger seat anymore.",7,66)
+
+ print("her door is open...",7,82)
+ 
+ print("press any button",60,119,6)
 end
 
 function draw_game()
