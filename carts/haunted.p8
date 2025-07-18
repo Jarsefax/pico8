@@ -24,7 +24,7 @@ __lua__
 -- init stuff
 
 -- globals
-state=2
+state=3
 -- 0: splash
 -- 1: menu
 -- 2: intro
@@ -38,7 +38,13 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y=10,10
+player_x,player_y,player_z=10,10,1
+-- -2: temple
+-- -1: labyrinth
+--  0: cellar
+--  1: ground level
+--  2: second floor
+--  3: third floor
 
 --function _init()
 --end
@@ -58,9 +64,9 @@ function update_splash()
 end
 
 function update_menu()
- if menu_state==0 and btn(⬇️) then menu_state=1
- elseif menu_state==1 and btn(⬆️) then menu_state=0
- elseif menu_state==0 and btn(🅾️) then state=2 end
+ if menu_state==0 and btnp(⬇️) then menu_state=1
+ elseif menu_state==1 and btnp(⬆️) then menu_state=0
+ elseif menu_state==0 and btnp(🅾️) then state=2 end
 end
 
 function update_intro()
@@ -68,7 +74,12 @@ function update_intro()
 end
 
 function update_game()
-
+ -- start dev map design code
+ old_z=player_z
+ if btnp(🅾️) then player_z-=1
+ elseif btnp(❎) then player_z+=1 end
+ if player_z<-2 or player_z>3 then player_z=old_z end
+ -- end dev map design code
 end
 -->8
 -- draw stuff
@@ -129,9 +140,46 @@ function draw_intro()
 end
 
 function draw_game()
+ -- start dev map design code
+ print("floor: "..player_z,5,5,10)
+ -- end dev map design code
+ 
+ if player_z==-2 then
+  draw_temple_level()
+ elseif player_z==-1 then
+  draw_labyrinth_level()
+ elseif player_z==0 then
+  draw_cellar_level()
+ elseif player_z==1 then
+  draw_ground_level()
+ elseif player_z==2 then
+  draw_second_floor()
+ else draw_third_floor() end
+end
+
+function draw_temple_level()
 
 end
 
+function draw_labyrinth_level()
+
+end
+
+function draw_cellar_level()
+
+end
+
+function draw_ground_level()
+
+end
+
+function draw_second_floor()
+
+end
+
+function draw_third_floor()
+
+end
 __gfx__
 00000000004444000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000044990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
