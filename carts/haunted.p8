@@ -38,13 +38,15 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y,player_z=10,10,1
+player_x,player_y=0,0
+player_z=3
 -- -2: temple
 -- -1: labyrinth
 --  0: cellar
 --  1: ground level
 --  2: second floor
 --  3: third floor
+office_visited=true
 
 --function _init()
 --end
@@ -80,6 +82,11 @@ function update_game()
  elseif btnp(❎) then player_z+=1 end
  if player_z<-2 or player_z>3 then player_z=old_z end
  -- end dev map design code
+ 
+ if btn(⬅️) then player_x-=1
+ elseif btn(➡️) then player_x+=1
+ elseif btn(⬆️) then player_y-=1
+ elseif btn(⬇️) then player_y+=1 end
 end
 -->8
 -- draw stuff
@@ -143,6 +150,8 @@ function draw_game()
  -- start dev map design code
  print("floor: "..player_z,5,5,10)
  -- end dev map design code
+
+ camera(player_x,player_y)
  
  if player_z==-2 then
   draw_temple_level()
@@ -178,7 +187,52 @@ function draw_second_floor()
 end
 
 function draw_third_floor()
+ draw_alcove()
+end
 
+function draw_alcove()
+ map_w,map_h=3,4
+ left_screen_x,upper_screen_y=0,0
+ 
+ -- upper left
+ map_x,map_y=8,0
+ map(map_x,map_y,left_screen_x,upper_screen_y,map_w,map_h)
+ 
+ -- upper right
+ map_x,map_y=12,0
+ screen_x=(map_w+1)*8
+ map(map_x,map_y,screen_x,upper_screen_y,map_w,map_h)
+  
+ -- lower left
+ map_x,map_y=8,5
+ screen_y=map_h*8
+ map(map_x,map_y,left_screen_x,screen_y,map_w,map_h)
+  
+ -- lower right
+ map_x,map_y=12,5
+ map(map_x,map_y,screen_x,screen_y,map_w,map_h)
+ 
+ middle_screen_x=map_w*8
+ if office_visited then
+  -- floor behind door
+  spr(34,middle_screen_x,upper_screen_y)
+ end
+ 
+ -- door
+ screen_y=upper_screen_y+8
+ spr(35,middle_screen_x,screen_y)
+ 
+ -- stairs
+ nr_tiles_down=map_h+1
+ screen_y=upper_screen_y+(nr_tiles_down*8)
+ spr(20,middle_screen_x,screen_y)
+ 
+ -- wall
+ map_w,map_h=1,2
+ screen_y+=8
+ map(8,7,middle_screen_x,screen_y,map_w,map_h)
+ 
+ -- center
 end
 __gfx__
 00000000004444000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
