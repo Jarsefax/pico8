@@ -188,25 +188,26 @@ end
 
 function draw_third_floor()
  draw_alcove()
+ draw_office()
 end
 
 function draw_alcove()
  map_w,map_h=3,4
- left_screen_x,upper_screen_y=0,0
+ left_most_screen_x,upper_most_screen_y=0,10*8
  
  -- upper left
  map_x,map_y=8,0
- map(map_x,map_y,left_screen_x,upper_screen_y,map_w,map_h)
+ map(map_x,map_y,left_most_screen_x,upper_most_screen_y,map_w,map_h)
  
  -- upper right
  map_x,map_y=12,0
  screen_x=(map_w+1)*8
- map(map_x,map_y,screen_x,upper_screen_y,map_w,map_h)
+ map(map_x,map_y,screen_x,upper_most_screen_y,map_w,map_h)
   
  -- lower left
  map_x,map_y=8,5
- screen_y=map_h*8
- map(map_x,map_y,left_screen_x,screen_y,map_w,map_h)
+ screen_y=upper_most_screen_y+(map_h*8)
+ map(map_x,map_y,left_most_screen_x,screen_y,map_w,map_h)
   
  -- lower right
  map_x,map_y=12,5
@@ -215,16 +216,16 @@ function draw_alcove()
  middle_screen_x=map_w*8
  if office_visited then
   -- floor behind door
-  spr(34,middle_screen_x,upper_screen_y)
+  spr(34,middle_screen_x,upper_most_screen_y)
  end
  
  -- door
- screen_y=upper_screen_y+8
+ screen_y=upper_most_screen_y+8
  spr(35,middle_screen_x,screen_y)
  
  -- stairs
  nr_tiles_down=map_h+1
- screen_y=upper_screen_y+(nr_tiles_down*8)
+ screen_y=upper_most_screen_y+(nr_tiles_down*8)
  spr(20,middle_screen_x,screen_y)
  
  -- wall
@@ -233,6 +234,20 @@ function draw_alcove()
  map(8,7,middle_screen_x,screen_y,map_w,map_h)
  
  -- center
+end
+
+function draw_office()
+ map_w,map_h=3,4
+ left_most_screen_x,upper_most_screen_y=0,0
+
+ -- upper left
+ map_x,map_y=8,0
+ map(map_x,map_y,left_most_screen_x,upper_most_screen_y,map_w,map_h)
+
+ -- upper right
+ map_x,map_y=12,0
+ screen_x=(map_w+1)*8
+ map(map_x,map_y,screen_x,upper_most_screen_y,map_w,map_h)
 end
 __gfx__
 00000000004444000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
