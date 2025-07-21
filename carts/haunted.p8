@@ -37,7 +37,7 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y=60,200
+player_x,player_y=100,200
 player_z=3
 -- -2: temple
 -- -1: labyrinth
@@ -46,6 +46,7 @@ player_z=3
 --  2: second floor
 --  3: third floor
 office_visited=true
+secret_room_discovered=true
 
 --function _init()
 --end
@@ -205,8 +206,13 @@ function draw_second_floor()
 end
 
 function draw_third_floor()
- draw_alcove()
- draw_office()
+ left,top=draw_alcove()
+ if office_visited then 
+  left,bottom=draw_office(left,top)
+ end
+ if secret_room_discovered then
+  draw_secret_room(left,bottom)
+ end
 end
 
 function draw_alcove() 
@@ -238,6 +244,7 @@ function draw_alcove()
  -- upper right
  map_x,map_y=12,0
  y=y-(4*8)
+ top=y
  map(map_x,map_y,right,y,3,4)
  
  -- upper left
@@ -273,20 +280,55 @@ function draw_alcove()
  map(map_x,map_y,x,y,1,1)
  
  -- todo: draw shotgun
+ 
+ return left,top
 end
 
-function draw_office()
- map_w,map_h=3,4
- left_most_screen_x,upper_most_screen_y=0,0
-
- -- upper left
+function draw_office(left,bottom)
  map_x,map_y=8,0
- --map(map_x,map_y,left_most_screen_x,upper_most_screen_y,map_w,map_h)
+ 
+ -- lower left
+ bottom_y=bottom-32
+ map(map_x,map_y,left,bottom_y,1,4)
+ 
+ -- top left
+ y=bottom_y-32
+ map(map_x,map_y,left,y,3,4)
+ 
+ -- top
+ x=left+(3*8)
+ for i=1,3 do
+  map(map_x,map_y,x,y,3,1)
+  x=x+(3*8)
+ end
+ 
+ -- top right
+ map_x=12
+ map(map_x,map_y,x,y,3,4)
+ 
+ -- right wall
+ map_x=8
+ most_x=x+(2*8)
+ map(map_x,map_y,most_x,bottom_y,1,4)
+ 
+ -- bottom right
+ map_x,map_y=12,5
+ map(map_x,map_y,x,bottom,3,3)
+ 
+ -- bottom
+ map_y=7
+ x,y=x-(3*8),bottom+(2*8)
+ map(map_x,map_y,x,y,3,1)
+ 
+ -- bottom left
+ x=x-16
+ map(map_x,map_y,x,y,2,1)
+ 
+ return x,y
+end
 
- -- upper right
- map_x,map_y=12,0
- screen_x=(map_w+1)*8
- --map(map_x,map_y,screen_x,upper_most_screen_y,map_w,map_h)
+function draw_secret_room(left,top)
+
 end
 __gfx__
 00000000004444000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
