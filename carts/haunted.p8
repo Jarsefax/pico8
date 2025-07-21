@@ -16,7 +16,6 @@ __lua__
 -- menu grfx
 -- ??? menu option
 
--- intro text
 -- intro text animation
 
 -- game stufz
@@ -38,7 +37,7 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y=20,200
+player_x,player_y=60,200
 player_z=3
 -- -2: temple
 -- -1: labyrinth
@@ -156,7 +155,8 @@ function draw_intro()
 end
 
 function draw_game()
- camera(player_x,player_y)
+ x,y=player_x-60,player_y-60
+ camera(x,y)
  
  if player_z==-2 then
   draw_temple_level()
@@ -169,6 +169,8 @@ function draw_game()
  elseif player_z==2 then
   draw_second_floor()
  else draw_third_floor() end
+ 
+ spr(1,player_x,player_y)
  
  -- start dev map design code
  print("floor: "..player_z,5-player_x,5-player_y,10)
@@ -269,6 +271,8 @@ function draw_alcove()
  
  x,y=x-8,y-8
  map(map_x,map_y,x,y,1,1)
+ 
+ -- todo: draw shotgun
 end
 
 function draw_office()
