@@ -37,7 +37,7 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y=100,200
+player_x,player_y=100,240
 player_z=3
 -- -2: temple
 -- -1: labyrinth
@@ -313,7 +313,7 @@ function draw_office(left,bottom)
  
  -- bottom right
  map_x,map_y=12,5
- map(map_x,map_y,x,bottom,3,3)
+ map(map_x,map_y,x,bottom,3,4)
  
  -- bottom
  map_y=7
@@ -324,11 +324,37 @@ function draw_office(left,bottom)
  x=x-16
  map(map_x,map_y,x,y,2,1)
  
+ -- straggler secret room hint
+ spr(33,x+32,y+8)
+ 
+ -- todo: center flooring
+ 
  return x,y
 end
 
 function draw_secret_room(left,top)
-
+ -- top right
+ map_x,map_y=12,0
+ x=left+8
+ map(map_x,map_y,x,top,3,4)
+ 
+ -- bottom right
+ map_y=5
+ y=top+(4*8)
+ map(map_x,map_y,x,y,3,4)
+ 
+ -- bottom left
+ map_x=8
+ x=left-8
+ map(map_x,map_y,x,y,3,4)
+ 
+ -- secret entrence
+ x,y=left+8,top+8
+ spr(34,x,top) -- doorway
+ spr(34,x,top+8) -- floor
+ spr(33,x-8,y) -- wall
+ 
+ -- todo: center flooring
 end
 __gfx__
 00000000004444000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
