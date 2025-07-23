@@ -19,6 +19,14 @@ __lua__
 -- intro text animation
 
 -- game stufz
+-- make alcove smaller
+-- toilet door away from stairs
+
+-- testing
+-- visit guest room first&last
+-- visit toilet first & last
+-- visit bedroom first & last
+
 -->8
 -- init stuff
 
@@ -37,15 +45,19 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y=100,240
-player_z=3
+player_x,player_y=80,230
+player_z=2
 -- -2: temple
 -- -1: labyrinth
 --  0: cellar
 --  1: ground level
 --  2: second floor
 --  3: third floor
+guest_room_visited=false
+toilet_visited=false
+bedroom_visited=true
 office_visited=true
+office_part_2_discovered=true
 secret_room_discovered=true
 
 --function _init()
@@ -91,9 +103,16 @@ end
 -->8
 -- draw stuff
 
-stairs_down_x,stairs_down_y=0,10
-stairs_up_x,stairs_up_y=3,10
+--stairs_down_x,stairs_down_y
+--stairs_up_x,stairs_up_y
+sdx,sdy,sux,suy=0,10,3,10
+--rooms_top_y,rooms_lower_y
+rty,rly=0,5
+--house_room_left_x
+--house_room_right_x
+hrlx,hrrx=8,12
 
+temple_labyrinth={x=20,y=5}
 garden_down={x=3,y=32}
 lobby_cellar={x=6,y=26}
 lobby_hall={x=7,y=25}
@@ -179,30 +198,180 @@ function draw_game()
 end
 
 function draw_temple_level()
-
+ -- stairs up to labyrinth 
+ x,y=temple_labyrinth.x*8,temple_labyrinth.y*8
+ map(sux,suy,x,y,2,1)
 end
 
 function draw_labyrinth_level()
-
+ -- stairs up
+ x,y=garden_down.x*8,garden_down.y*8
+ map(sux,suy,x,y,2,1)
+ 
+ -- stairs down to temple
+ x,y=temple_labyrinth.x*8,temple_labyrinth.y*8
+ map(sdx,sdy,x,y,2,1)
 end
 
 function draw_cellar_level()
+ -- stairs up to lobby
+ x,y=lobby_cellar.x*8,lobby_cellar.y*8
+ map(sux,suy,x,y,2,1)
 
+ -- stairs between garden and labyrinth
+ x,y=garden_down.x*8,garden_down.y*8
+ map(sdx,sdy,x,y,2,1)
 end
 
 function draw_ground_level()
+ -- stairs down to labyrinth
  x,y=garden_down.x*8,garden_down.y*8
- map(stairs_up_x,stairs_up_y,x,y,2,1)
+ map(sux,suy,x,y,2,1)
 
+ -- stairs down to cellar
  x,y=lobby_cellar.x*8,lobby_cellar.y*8
- map(stairs_down_x,stairs_down_y,x,y,2,1)
+ map(sdx,sdy,x,y,2,1)
 
+ -- stairs up to hall
  x,y=lobby_hall.x*8,lobby_hall.y*8
- map(stairs_down_x,stairs_down_y,x,y,2,1)
+ map(sux,suy,x,y,2,1)
 end
 
 function draw_second_floor()
+ left,top=draw_hall()
+ x,y=draw_bedroom(left,top)
+ x,y=draw_toilet(x,y)
+ if guest_room_visited then
+  draw_guest_room(x,y)
+ end
+end
 
+function draw_hall()
+ -- stairs down to lobby
+ x,y=lobby_hall.x*8,lobby_hall.y*8
+ map(sdx,sdy,x,y,2,1)
+
+ -- stairs up to alcove
+ x,y=hall_alcove.x*8,hall_alcove.y*8
+ map(sux,suy,x,y,2,1)
+
+ -- lower left
+ left_wall_x=x-16
+ map(hrlx,rly,left_wall_x,y,3,4)
+ 
+ -- lower right
+ map_x=12
+ x+=8
+ map(hrrx,rly,x,y,3,4)
+ 
+ right_wall_x=x+16
+ 
+ -- guest room door
+ y-=8
+ spr(36,right_wall_x,y)
+ 
+ -- guest room wall
+ y-=(3*8)
+ map(hrlx,rty,right_wall_x,y,1,3)
+ 
+ y-=(3*8)
+ -- lower toilet wall
+ if toilet_visited==false then
+  map(hrlx,rty,right_wall_x,y,1,3)
+ end
+ 
+ -- toilet door
+ y-=8
+ spr(36,right_wall_x,y)
+ 
+ -- upper toilet wall
+ y-=16
+ map(hrlx,rty,right_wall_x,y,1,2)
+ 
+ -- upper wall side
+ x=right_wall_x-8
+ spr(33,x,y)
+ 
+ -- upper right corner
+ y-=8
+ map(hrlx,ruy,x,y,2,1)
+ 
+ -- bedroom door
+ x-=8
+ spr(35,x,y+8)
+ if (bedroom_visited) then
+  spr(34,x,y)
+ end
+ 
+ -- upper left corner
+ map(hrlx,rty,left_wall_x,y,3,4)
+ top_y=y
+ 
+ -- upper left wall
+ y=y+(4*8)
+ map(hrlx,rty,left_wall_x,y,1,4)
+ 
+ -- lower left wall
+ y+=(4*8)
+ map(hrlx,rty,left_wall_x,y,1,3)
+ 
+ -- todo center flooring
+ 
+ return left_wall_x,top_y
+end
+
+function draw_bedroom(left,bottom)
+ -- bottom left corner
+ y=bottom-(2*8)
+ map(hrlx,rly,left,y,3,3)
+ 
+ -- top left corner
+ y-=(4*8)
+ map(hrlx,rty,left,y,3,4)
+ 
+ x=left+(3*8)
+ -- top wall
+ for i=1,3 do  
+  map(8,7,x,y,3,2)
+  x+=(3*8)
+ end
+ 
+ -- top right corner
+ map(hrrx,rty,x,y,3,4)
+ 
+ -- bottom right corner
+ y=bottom-(2*8)
+ map(hrrx,rly,x,y,3,4)
+ 
+ -- bottom wall
+ y+=8 
+ for i=1,6 do
+  x-=8
+  map(hrrx,6,x,y,1,3)
+ end
+ 
+ return x-8,y+8
+end
+
+function draw_toilet(x,y)
+ return x,y
+end
+
+function draw_guest_room(left,y)
+ -- left bottom wall
+ map(hrlx,7,left,y,3,2)
+
+ -- middle bottom wall
+ x=left+(3*8)
+ map(hrlx,7,x,y,3,2)
+
+ -- right lower corner
+ y-=16
+ x+=(3*8)
+ map(hrrx,rly,x,y,3,4)
+
+ -- upper right corner
+  
 end
 
 function draw_third_floor()
@@ -218,10 +387,10 @@ end
 function draw_alcove() 
  -- stairs
  stairs_x,stairs_y=hall_alcove.x*8,hall_alcove.y*8
- map(stairs_down_x,stairs_down_y,stairs_x,stairs_y,2,1) 
+ map(sdx,sdy,stairs_x,stairs_y,2,1) 
  
- left=(hall_alcove.x*8)-(2*8)
- right=left+(4*8)
+ left=(hall_alcove.x*8)-16
+ right=left+32
 
  -- lower left
  map_x,map_y=8,5
@@ -233,7 +402,7 @@ function draw_alcove()
  
  -- left wall
  map_x,map_y=8,2
- y=stairs_y-(2*8)
+ y=stairs_y-16
  map(map_x,map_y,left,y,2,2)
  
  -- right wall
@@ -243,7 +412,7 @@ function draw_alcove()
  
  -- upper right
  map_x,map_y=12,0
- y=y-(4*8)
+ y-=32
  top=y
  map(map_x,map_y,right,y,3,4)
  
@@ -296,10 +465,10 @@ function draw_office(left,bottom)
  map(map_x,map_y,left,y,3,4)
  
  -- top
- x=left+(3*8)
+ x=left+24
  for i=1,3 do
   map(map_x,map_y,x,y,3,1)
-  x=x+(3*8)
+  x+=24
  end
  
  -- top right
@@ -308,24 +477,32 @@ function draw_office(left,bottom)
  
  -- right wall
  map_x=8
- most_x=x+(2*8)
+ most_x=x+16
  map(map_x,map_y,most_x,bottom_y,1,4)
  
  -- bottom right
  map_x,map_y=12,5
- map(map_x,map_y,x,bottom,3,4)
+ if office_part_2_discovered then
+  map(map_x,map_y,x,bottom,3,4)
+ end
  
  -- bottom
  map_y=7
- x,y=x-(3*8),bottom+(2*8)
- map(map_x,map_y,x,y,3,1)
+ x,y=x-24,bottom+16
+ if office_part_2_discovered then
+  map(map_x,map_y,x,y,3,1)
+ end
  
  -- bottom left
- x=x-16
- map(map_x,map_y,x,y,2,1)
+ x-=16
+ if office_part_2_discovered then
+  map(map_x,map_y,x,y,2,1)
+ end
  
  -- straggler secret room hint
- spr(33,x+32,y+8)
+ if office_part_2_discovered then
+  spr(33,x+32,y+8)
+ end
  
  -- todo: center flooring
  
@@ -340,7 +517,7 @@ function draw_secret_room(left,top)
  
  -- bottom right
  map_y=5
- y=top+(4*8)
+ y=top+32
  map(map_x,map_y,x,y,3,4)
  
  -- bottom left
@@ -373,14 +550,14 @@ bbbbbbbb3333bbb34434443400000000450505050500000045050505000000000000000000000000
 bbbbbbbb333333334344343400000000000505050505000045050500000000000000000000000000000000000000000000000000000000000000000000000000
 bbbbbbbb3bbbbbb34334434400000000000005050505050045050000000000000000000000000000000000000000000000000000000000000000000000000000
 bbbbbbbb333333334444444400000000000000050505050545000000000000000000000000000000000000000000000000000000000000000000000000000000
-66666666555555554444444455555555000005550000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-66666666566666652222222254444445000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-666666665555555544444444dd444445000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-66666666566655552222444454444445000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-66666666555566654444222254444045000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-66666666555555554444444454444445000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-666666665666666522222222dd444445000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-66666666555555554444444454444445000005550000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+66666666555555554444444455555555444445550000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+66666666566666652222222259999995222222900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+666666665555555544444444dd999995444444900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+66666666566655552222444459999995222444900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+66666666555566654444222259999095444222900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+66666666555555554444444459999995444444900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+666666665666666522222222dd999995222222900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+66666666555555554444444459999995444445550000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 dddddddd111111110000000011111111000001110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 dddddddd1dddddd11111111114444441000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 dddddddd111111110000000055444441000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
