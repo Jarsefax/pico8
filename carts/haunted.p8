@@ -45,7 +45,7 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y=80,230
+player_x,player_y=120,200
 player_z=2
 -- -2: temple
 -- -1: labyrinth
@@ -54,7 +54,7 @@ player_z=2
 --  2: second floor
 --  3: third floor
 guest_room_visited=false
-toilet_visited=false
+toilet_visited=true
 bedroom_visited=true
 office_visited=true
 office_part_2_discovered=true
@@ -238,11 +238,15 @@ function draw_ground_level()
 end
 
 function draw_second_floor()
- left,top=draw_hall()
- x,y=draw_bedroom(left,top)
- x,y=draw_toilet(x,y)
+ left,top,right,y1,y2=draw_hall()
+ if bedroom_visited then
+  draw_bedroom(left,top)
+ end
+ if toilet_visited then
+  draw_toilet(right,y1)
+ end
  if guest_room_visited then
-  draw_guest_room(x,y)
+  draw_guest_room(right,y2)
  end
 end
 
@@ -274,12 +278,14 @@ function draw_hall()
  y-=(3*8)
  map(hrlx,rty,right_wall_x,y,1,3)
  
+ guest_room_top=y-8
+ 
  y-=(3*8)
  -- lower toilet wall
  if toilet_visited==false then
   map(hrlx,rty,right_wall_x,y,1,3)
  end
- 
+  
  -- toilet door
  y-=8
  spr(36,right_wall_x,y)
@@ -302,6 +308,7 @@ function draw_hall()
  if (bedroom_visited) then
   spr(34,x,y)
  end
+ toilet_top=y
  
  -- upper left corner
  map(hrlx,rty,left_wall_x,y,3,4)
@@ -317,7 +324,7 @@ function draw_hall()
  
  -- todo center flooring
  
- return left_wall_x,top_y
+ return left_wall_x,top_y,right_wall_x,toilet_top,guestroom_top
 end
 
 function draw_bedroom(left,bottom)
@@ -353,11 +360,36 @@ function draw_bedroom(left,bottom)
  return x-8,y+8
 end
 
-function draw_toilet(x,y)
- return x,y
+function draw_toilet(left,top)
+ -- upper wall
+ x=left+8
+ for i=1,2 do
+  map(8,7,x,top,3,2)
+  x+=(3*8)
+ end
+ 
+ -- upper right corner
+ map(hrrx,rty,x,top,3,4)
+ 
+ -- lower right corner
+ y=top+(4*8)
+ map(hrrx,rly,x,y,3,4)
+ 
+ -- lower wall
+ y+=(2*8)
+ for i=1,2 do
+  x-=(2*8)
+  map(8,7,x,y,3,2)  
+ end
+ 
+ -- lower left corner
+ x-=(3*8)
+ y-=16
+ map(hrlx,rly,x,y,3,3)
+ map(9,1,x+8,y+24,2,1)
 end
 
-function draw_guest_room(left,y)
+function draw_guest_room(left,top)
  -- left bottom wall
  map(hrlx,7,left,y,3,2)
 
