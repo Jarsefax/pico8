@@ -20,6 +20,7 @@ __lua__
 
 -- game stufz
 -- make alcove smaller
+-- make toilet smaller
 -- toilet door away from stairs
 
 -- testing
@@ -45,7 +46,7 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y=120,200
+player_x,player_y=120,230
 player_z=2
 -- -2: temple
 -- -1: labyrinth
@@ -53,7 +54,7 @@ player_z=2
 --  1: ground level
 --  2: second floor
 --  3: third floor
-guest_room_visited=false
+guest_room_visited=true
 toilet_visited=true
 bedroom_visited=true
 office_visited=true
@@ -324,7 +325,7 @@ function draw_hall()
  
  -- todo center flooring
  
- return left_wall_x,top_y,right_wall_x,toilet_top,guestroom_top
+ return left_wall_x,top_y,right_wall_x,toilet_top,guest_room_top
 end
 
 function draw_bedroom(left,bottom)
@@ -357,7 +358,7 @@ function draw_bedroom(left,bottom)
   map(hrrx,6,x,y,1,3)
  end
  
- return x-8,y+8
+ -- todo center flooring
 end
 
 function draw_toilet(left,top)
@@ -387,23 +388,40 @@ function draw_toilet(left,top)
  y-=16
  map(hrlx,rly,x,y,3,3)
  map(9,1,x+8,y+24,2,1)
+ 
+ -- todo center flooring
 end
 
 function draw_guest_room(left,top)
- -- left bottom wall
- map(hrlx,7,left,y,3,2)
-
- -- middle bottom wall
- x=left+(3*8)
- map(hrlx,7,x,y,3,2)
+ -- upper left corner
+ map(hrlx,rty,left,top,3,4)
+ 
+ -- upper wall
+ x=left+8
+ for i=1,2 do
+  map(8,7,x,top,3,2)
+  x+=(3*8)
+ end
+ 
+ -- upper right corner
+ map(hrrx,rty,x,top,3,4)
+ 
+ -- right wall
+ y=top+16
+ map(hrlx,rly,x+16,y,1,3)
 
  -- right lower corner
- y-=16
- x+=(3*8)
+ y+=(3*8)
  map(hrrx,rly,x,y,3,4)
-
- -- upper right corner
-  
+ 
+ -- bottom wall
+ y+=16
+ for i=1,2 do
+  x-=(3*8)
+  map(hrlx,7,x,y,3,2)
+ end
+ 
+ -- todo center flooring
 end
 
 function draw_third_floor()
