@@ -149,139 +149,89 @@ function draw_second_floor()
 end
 
 function draw_hall()
- -- stairs down to lobby
- x,y=lobby_hall.x*8,lobby_hall.y*8
- map(sdx,sdy,x,y,2,1)
+  x,y=lobby_hall.x*8,lobby_hall.y*8
+  -- upper left corner
+  map(hrlx,rty, x-(2*8),y-(3*8), 6,5)
+  -- left wall
+  map(hrlx,rty+2, x-(2*8),y+16, 5,1)
+  -- bedroom door
+  spr(35, x+8,y-(2*8))
+  -- floor behind bedroom door
+  if bedroom_visited then
+    spr(34, x+8,y-(3*8))
+  else
+    rectfill(x+8,y-(3*8), x+16,y-(2*8), 0)
+  end
+  -- wall right of bedroom door
+  --map
+  -- upper right corner
+  map(hrrx-1,rty, x+(4*8),y-(3*8), 4,5)
+  -- toilet door
+  spr(36, x+(7*8),y)
+  -- corner under toilet door
+  map(hrrx,rly, x+(5*8),y+8, 3,4)
+  -- corner of "toilet hall" to "main hall"
+  map(hrlx,ruy, x+(3*8),y+(3*8), 2,2)
+  -- stairs to lobby
+  map(sdx,sdy,x,y,2,1)
 
- -- stairs up to alcove
- x,y=hall_alcove.x*8,hall_alcove.y*8
- map(sux,suy,x,y,2,1)
-
- -- lower left corner
- map(hrlx,rly,x-16,y,3,4) 
- -- lower right corner
- map(hrrx,rly,x+8,y,3,4) 
- -- guest room door
- spr(36,x+(3*8),y-8) 
- -- wall over guest room door
- map(hrlx,rty,x+(3*8),y-(4*8),1,3)
- -- lower toilet wall
- if toilet_visited==false then
-  map(hrlx,rty,x+(3*8),y-(7*8),1,3)
- end  
- -- toilet door
- spr(36,x+(3*8),y-(8*8))
- -- upper toilet wall
- map(hrlx,rty,x+(3*8),y-(10*8),1,2)
- -- upper wall side
- spr(33,x+(3*8),y-(11*8)) 
- -- upper right corner
- --map(hrlx,ruy,x,y,2,1) 
- -- bedroom door
- --spr(35,x,y+8)
- if (bedroom_visited) then
-  --spr(34,x,y)
- end 
- -- upper left corner
- --map(hrlx,rty,left_wall_x,y,3,4)
- -- upper left wall
- --map(hrlx,rty,left_wall_x,y,1,4)
- -- lower left wall
- map(hrlx,rty,left_wall_x,y,1,3)
+  x,y=hall_alcove.x*8,hall_alcove.y*8
+  -- lower left corner
+  map(hrlx,rly,x-16,y,3,4)
+  -- left wall
+  map(hrlx,rty+2, x-(2*8),y-(5*8), 5,5)
+  -- lower right corner
+  map(hrrx,rly,x+8,y,3,4)
+  -- guest room door
+  spr(36,x+(3*8),y-8) 
+  -- wall over guest room door
+  map(hrlx,rty, x+(3*8),y-(4*8), 1,3)
+  -- stairs to alcove
+  map(sux,suy,x,y,2,1)
  
- -- todo center flooring
+  -- todo center flooring
 end
 
-function draw_bedroom(left,bottom)
- -- bottom left corner
- y=bottom-(2*8)
- map(hrlx,rly,left,y,3,3)
- 
- -- top left corner
- y-=(4*8)
- map(hrlx,rty,left,y,3,4)
- 
- x=left+(3*8)
- -- top wall
- for i=1,3 do  
-  map(8,7,x,y,3,2)
-  x+=(3*8)
- end
- 
- -- top right corner
- map(hrrx,rty,x,y,3,4)
- 
- -- bottom right corner
- y=bottom-(2*8)
- map(hrrx,rly,x,y,3,4)
- 
- -- bottom wall
- y+=8 
- for i=1,3 do
-  x-=8
-  map(hrrx,6,x,y,1,3)
- end
- 
- -- todo center flooring
+function draw_bedroom()
+  origin_x,origin_y=(lobby_hall.x-2)*8,(lobby_hall.y-10)*8
+  -- left
+  map(hrlx,rty, origin_x,origin_y, 6,7)
+  -- middle
+  map(hrlx+1,rty, origin_x+(6*8),origin_y, 3,7)
+  --right
+  map(hrlx+1,rty, origin_x+(9*8),origin_y, 6,7)
+  -- lower right wall
+  if toilet_visited==false then
+    map(hrlx,rly+2, origin_x+(10*8),origin_y+(7*8), 5,2)
+  end
+
+  -- todo center flooring
 end
 
-function draw_toilet(left,top)
- -- upper wall
- x=left+(4*8)
- map(hrlx,7,x,top,3,2)
- x+=(3*8)
+function draw_toilet()
+  origin_x,origin_y=(lobby_hall.x+8)*8,(lobby_hall.y-3)*8
+  -- upper
+  map(hrlx+2,rty, origin_x,origin_y, 5,3)
+  -- center
+  map(hrlx+2,rty+2, origin_x,origin_y+(3*8), 5,1)
+  -- lower
+  map(hrlx+2,rly, origin_x,origin_y+(4*8), 5,4)
  
- -- upper right corner
- map(hrrx,rty,x,top,3,4)
- 
- -- lower right corner
- y=top+(4*8)
- map(hrrx,rly,x,y,3,4)
- 
- -- lower wall
- --y+=(2*8)
- --x-=(2*8)
- --map(0,7,x,y,3,2)
- 
- -- lower left corner
- x-=(3*8)
- --y-=16
- map(hrlx,rly,x,y,3,3)
- map(9,1,x+8,y+24,2,1)
- 
- -- todo center flooring
+  -- todo center flooring
 end
 
-function draw_guest_room(left,top)
- -- upper left corner
- map(hrlx,rty,left,top,3,4)
- 
- -- upper wall
- x=left+8
- for i=1,2 do
-  map(8,7,x,top,3,2)
-  x+=(3*8)
- end
- 
- -- upper right corner
- map(hrrx,rty,x,top,3,4)
- 
- -- right wall
- y=top+16
- map(hrlx,rly,x+16,y,1,3)
+function draw_guest_room()
+  origin_x,origin_y=(hall_alcove.x+4)*8,(hall_alcove.y-5)*8
+  -- upper left
+  map(hrlx+1,rty+1, origin_x,origin_y+8, 4,4)
+  -- upper right
+  map(hrrx-1,rty, origin_x+(5*8),origin_y, 5,5)
+  -- lower left
+  map(hrlx+1,rly+1, origin_x,origin_y+(6*8), 4,4)
+  -- lower right
+  map(hrrx-2,rly, origin_x+(4*8),origin_y+(5*8), 6,4)
 
- -- right lower corner
- y+=(3*8)
- map(hrrx,rly,x,y,3,4)
- 
- -- bottom wall
- y+=16
- for i=1,2 do
-  x-=(3*8)
-  map(hrlx,7,x,y,3,2)
- end
- 
- -- todo center flooring
+  -- todo center flooring
 end
 
 function draw_third_floor()

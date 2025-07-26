@@ -13,7 +13,7 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y=120,230
+player_x,player_y=100,220
 player_z=2
 -- -2: temple
 -- -1: labyrinth
@@ -21,10 +21,10 @@ player_z=2
 --  1: ground level
 --  2: second floor
 --  3: third floor
-guest_room_visited=false
-toilet_visited=false
-bedroom_visited=false
-office_visited=false
+guest_room_visited=true
+toilet_visited=true
+bedroom_visited=true
+office_visited=true
 office_part_2_discovered=true
 secret_room_discovered=false
 
