@@ -17,6 +17,8 @@
 
 -- game stufz
 -- make alcove smaller
+-- make dining room bigger
+-- make kitchen smaller
 -- make stairs look like they are going in the correct direction
 -- let player see out of windows
 
