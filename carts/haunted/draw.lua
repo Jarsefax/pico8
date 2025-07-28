@@ -140,6 +140,12 @@ function draw_ground_level()
   if bathroom_visited then
     draw_bathroom()
   end
+  if right_garden_visited then
+    draw_right_garden()
+  end
+  if upper_garden_discovered then
+    draw_upper_garden()
+  end
   if left_garden_dicovered then
     draw_left_garden()
   end
@@ -236,6 +242,33 @@ function draw_bathroom()
   map(hrlx,rty, origin_x,origin_y, 7,7)
 
   -- todo draw floor
+end
+
+function draw_right_garden()
+  -- bottom left wall
+  map(grlx+1,rty, (garden_down.x+18)*8,(garden_down.y+2)*8, 3,2)
+  -- door to front
+  spr(35, (garden_down.x+21)*8,(garden_down.y+3)*8)
+  -- right lower corner
+  map(grrx-1,rly-3, (garden_down.x+22)*8,(garden_down.y-3)*8, 4,7)
+  -- lower wall
+  map(grlx,rty, (garden_down.x+25)*8,(garden_down.y-10)*8, 1,7)
+  -- middle wall
+  map(grlx,rty, (garden_down.x+25)*8,(garden_down.y-17)*8, 1,7)
+  -- upper wall
+  map(grlx,rty, (garden_down.x+25)*8,(garden_down.y-21)*8, 1,4)
+  -- workshed side
+  map(hrlx,rty, (garden_down.x+17)*8,(garden_down.y-24)*8, 1,5)
+  -- upper right corner
+  map(grrx-3,rty, (garden_down.x+20)*8,(garden_down.y-28)*8, 7,7)
+  -- upper wall
+  map(grlx+1,rty, (garden_down.x+17)*8,(garden_down.y-28)*8, 4,2)
+ 
+  -- todo draw ground
+end
+
+function draw_upper_garden()
+  
 end
 
 function draw_left_garden()

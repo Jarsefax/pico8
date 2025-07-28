@@ -21,6 +21,7 @@
 -- make kitchen smaller
 -- make stairs look like they are going in the correct direction
 -- let player see out of windows
+-- make door from front to garden see through bars
 
 -- testing
 -- visit guest room first & last
