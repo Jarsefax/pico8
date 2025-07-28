@@ -17,8 +17,8 @@
 
 -- game stufz
 -- make alcove smaller
--- make toilet smaller
--- toilet door away from stairs
+-- make stairs look like they are going in the correct direction
+-- let player see out of windows
 
 -- testing
 -- visit guest room first&last

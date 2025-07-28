@@ -9,11 +9,16 @@ rty,rly=0,5
 hrlx,hrrx=8,12
 --house_room_left_x
 --house_room_right_x
+grlx,grrx=0,4
+--garden_room_left_x
+--garden_room_right_x
+gx,gy=24,2
+-- ground_x,ground_y
 
 -- stairs cell positions
 temple_labyrinth={x=20,y=5}
-garden_down={x=3,y=32}
-lobby_cellar={x=6,y=26}
+garden_down={x=2,y=32}
+lobby_cellar={x=7,y=26}
 lobby_hall={x=7,y=25}
 hall_alcove={x=7,y=33}
 
@@ -122,17 +127,65 @@ function draw_cellar_level()
 end
 
 function draw_ground_level()
- -- stairs down to labyrinth
- x,y=garden_down.x*8,garden_down.y*8
- map(sux,suy,x,y,2,1)
+  draw_front()
+  if entre_visited then
+    draw_entre()
+  end
+  if left_garden_dicovered then
+    draw_left_garden()
+  end
+end
 
- -- stairs down to cellar
- x,y=lobby_cellar.x*8,lobby_cellar.y*8
- map(sdx,sdy,x,y,2,1)
+function draw_front()
+  
+end
 
- -- stairs up to hall
- x,y=lobby_hall.x*8,lobby_hall.y*8
- map(sux,suy,x,y,2,1)
+function draw_entre()
+  x,y=lobby_hall.x*8,lobby_hall.y*8
+  -- upper left corner
+  map(hrlx,rty, x-(2*8),y-(3*8), 3,6)
+  -- door to bathroom
+  spr(35, x+8,y-16)
+  -- floor behind bathroom door
+  if bathroom_visited then
+    spr(34, x+8,y-(3*8))
+  end
+  -- upper right corner
+  map(hrrx+1,rty, x+(2*8),y-(3*8), 2,5)
+  -- door to kitchen
+  spr(36, x+(3*8),y+16)
+  -- lower left corner
+  map(hrlx,rly-3, x-16,y+(4*8), 4,7)
+  -- draw entrence doors
+  spr(35, x+(2*8),y+(10*8), 1,1, true)
+  spr(35, x+(3*8),y+(10*8))
+  -- floor behind entrence doors
+  if entre_visited then
+    map(gx,gy, x+(2*8),y+(9*8), 2,1)
+  end
+  -- wall right of entrence
+  map(hrlx,rly+2, x+(4*8),y+(9*8), 3,2)
+  -- lower right corner
+  map(hrrx-3,rly-3, x+(7*8),y+(4*8), 7,7)
+  -- stairs up to hall
+  map(sux,suy,x,y,2,1)
+  -- stairs down to cellar
+  x,y=lobby_cellar.x*8,lobby_cellar.y*8
+  map(sdx,sdy,x,y,2,1)
+
+  -- todo draw floor
+end
+
+function draw_left_garden()
+  x,y=garden_down.x*8,garden_down.y*8
+  -- lower left corner
+  map(grlx,rly, x-(2*8),y, 5,5)
+  -- left wall
+  map(grlx,rty+2, x-(2*8),y-(5*8), 2,5)
+  -- stairs down to labyrinth
+  map(sux,suy,x,y,2,1)
+ 
+  -- todo draw ground
 end
 
 function draw_second_floor()
@@ -162,8 +215,6 @@ function draw_hall()
   else
     rectfill(x+8,y-(3*8), x+16,y-(2*8), 0)
   end
-  -- wall right of bedroom door
-  --map
   -- upper right corner
   map(hrrx-1,rty, x+(4*8),y-(3*8), 4,5)
   -- toilet door
@@ -189,7 +240,7 @@ function draw_hall()
   -- stairs to alcove
   map(sux,suy,x,y,2,1)
  
-  -- todo center flooring
+  -- todo draw floor
 end
 
 function draw_bedroom()
@@ -205,7 +256,7 @@ function draw_bedroom()
     map(hrlx,rly+2, origin_x+(10*8),origin_y+(7*8), 5,2)
   end
 
-  -- todo center flooring
+  -- todo draw floor
 end
 
 function draw_toilet()
@@ -217,7 +268,7 @@ function draw_toilet()
   -- lower
   map(hrlx+2,rly, origin_x,origin_y+(4*8), 5,4)
  
-  -- todo center flooring
+  -- todo draw floor
 end
 
 function draw_guest_room()
@@ -231,7 +282,7 @@ function draw_guest_room()
   -- lower right
   map(hrrx-2,rly, origin_x+(4*8),origin_y+(5*8), 6,4)
 
-  -- todo center flooring
+  -- todo draw floor
 end
 
 function draw_third_floor()
@@ -308,6 +359,7 @@ function draw_alcove()
  x,y=x-8,y-8
  map(map_x,map_y,x,y,1,1)
  
+ -- todo: draw floor
  -- todo: draw shotgun
  
  return left,top
@@ -364,7 +416,7 @@ function draw_office(left,bottom)
   spr(33,x+32,y+8)
  end
  
- -- todo: center flooring
+ -- todo: draw floor
  
  return x,y
 end
@@ -391,5 +443,5 @@ function draw_secret_room(left,top)
  spr(34,x,top+8) -- floor
  spr(33,x-8,y) -- wall
  
- -- todo: center flooring
+ -- todo: draw floor
 end
