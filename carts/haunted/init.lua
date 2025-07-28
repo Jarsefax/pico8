@@ -22,7 +22,7 @@ player_z=1
 --  2: second floor
 --  3: third floor
 entre_visited=true
-dining_room_dicovered=false
+dining_room_dicovered=true
 kitchen_visited=true
 bathroom_visited=true
 left_garden_dicovered=true

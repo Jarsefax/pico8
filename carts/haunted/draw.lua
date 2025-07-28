@@ -101,9 +101,9 @@ function draw_game()
 end
 
 function draw_temple_level()
- -- stairs up to labyrinth 
- x,y=temple_labyrinth.x*8,temple_labyrinth.y*8
- map(sux,suy,x,y,2,1)
+  -- stairs up to labyrinth
+  x,y=temple_labyrinth.x*8,temple_labyrinth.y*8
+  map(sux,suy,x,y,2,1)
 end
 
 function draw_labyrinth_level()
@@ -131,11 +131,11 @@ function draw_ground_level()
   if entre_visited then
     draw_entre()
   end
-  if dining_room_dicovered then
-    draw_dining_room()
-  end
   if kitchen_visited then
     draw_kitchen()
+  end
+  if dining_room_dicovered then
+    draw_dining_room()
   end
   if bathroom_visited then
     draw_bathroom()
@@ -177,7 +177,7 @@ function draw_entre()
     map(gx,gy, x+(2*8),y+(9*8), 2,1)
   end
   -- wall right of entrence
-  map(hrlx,rly+2, x+(4*8),y+(9*8), 3,2)  
+  map(hrlx,rly+2, x+(4*8),y+(9*8), 3,2)
   -- lower right corner
   map(hrrx-3,rly+1, x+(7*8),y+(8*8), 7,6)
   -- "upper" right corner
@@ -187,6 +187,27 @@ function draw_entre()
   -- stairs down to cellar
   x,y=lobby_cellar.x*8,lobby_cellar.y*8
   map(sdx,sdy,x,y,2,1)
+
+  -- todo draw floor
+end
+
+function draw_kitchen()
+  origin_x,origin_y=(lobby_hall.x+4)*8,(lobby_hall.y-10)*8
+
+  -- upper left corner
+  map(hrlx,rty, origin_x,origin_y, 5,7)
+  -- upper right corner
+  map(hrrx-1,rty, origin_x+(5*8),origin_y, 4,4)
+  -- door to garden
+  spr(36, origin_x+(8*8),origin_y+(4*8))
+  -- lower right corner
+  map(hrrx-1,rly-3, origin_x+(5*8),origin_y+(5*8), 4,7)
+  -- wall right of dining room door
+  map(hrlx+1,rty, origin_x+(3*8),origin_y+(10*8), 2,2)
+  -- wall left of dining room door
+  map(hrlx+1,rty, origin_x+8,origin_y+(10*8), 1,2)
+  -- door to dining room
+  spr(35, origin_x+(2*8), origin_y+(11*8))
 
   -- todo draw floor
 end
@@ -208,22 +229,13 @@ function draw_dining_room()
   -- todo draw floor
 end
 
-function draw_kitchen()
-  origin_x,origin_y=(lobby_hall.x+4)*8,(lobby_hall.y-10)*8
-
-  -- upper left corner
-  map(hrlx,rty, origin_x,origin_y, 5,7)
-  -- upper right corner
-  map(hrrx-1,rty, origin_x+(5*8),origin_y, 4,7)
-  -- lower right corner
-  map(hrrx-1,rly-1, origin_x+(5*8),origin_y+(7*8), 4,7)
-end
-
 function draw_bathroom()
   origin_x,origin_y=(lobby_hall.x-2)*8,(lobby_hall.y-10)*8
   
   -- top left corner
   map(hrlx,rty, origin_x,origin_y, 7,7)
+
+  -- todo draw floor
 end
 
 function draw_left_garden()

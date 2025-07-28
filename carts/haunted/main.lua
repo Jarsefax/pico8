@@ -23,6 +23,9 @@
 -- let player see out of windows
 
 -- testing
--- visit guest room first&last
+-- visit guest room first & last
 -- visit toilet first & last
 -- visit bedroom first & last
+-- visit bathroom first & last
+-- visit kitchen first & last
+-- visit dining room first & last
