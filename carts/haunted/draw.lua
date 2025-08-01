@@ -152,7 +152,26 @@ function draw_ground_level()
 end
 
 function draw_front()
-  
+  draw_road()
+end
+
+function draw_road()
+  origin_x,origin_y=garden_down.x-10,garden_down.y+5
+  -- top (left to right)
+  map(6,11, origin_x*8,origin_y*8, 14,1)
+  map(6,11, (origin_x+14)*8,origin_y*8, 14,1)
+  map(6,11, (origin_x+28)*8,origin_y*8, 14,1)
+  map(6,11, (origin_x+42)*8,origin_y*8, 14,1)
+  -- middle (left to right)
+  map(6,10, origin_x*8,(origin_y+2)*8, 14,1)
+  map(6,10, (origin_x+14)*8,(origin_y+4)*8, 14,1)
+  map(6,10, (origin_x+28)*8,(origin_y+4)*8, 14,1)
+  map(6,10, (origin_x+42)*8,(origin_y+4)*8, 14,1)
+  -- bottom (left to right)
+  map(6,9, origin_x*8,(origin_y+2)*8, 14,1)
+  map(6,9, (origin_x+14)*8,(origin_y+8)*8, 14,1)
+  map(6,9, (origin_x+28)*8,(origin_y+8)*8, 14,1)
+  map(6,9, (origin_x+42)*8,(origin_y+8)*8, 14,1)
 end
 
 function draw_entre()
@@ -172,7 +191,7 @@ function draw_entre()
   -- wall under kitchen door
   spr(32, x+(4*8),y)
   -- inner corner
-  map(hrlx,rly-2, x+(4*8),y+8, 4,7)
+  map(hrlx,rly-2, x+(4*8),y+8, 4,6)
   -- lower left corner
   map(hrlx,rly-3, x-16,y+(4*8), 4,7)
   -- draw entrence doors
@@ -185,7 +204,7 @@ function draw_entre()
   -- wall right of entrence
   map(hrlx,rly+2, x+(4*8),y+(9*8), 3,2)
   -- lower right corner
-  map(hrrx-3,rly+1, x+(7*8),y+(8*8), 7,6)
+  map(hrrx-3,rly+1, x+(7*8),y+(8*8), 7,3)
   -- "upper" right corner
   map(hrrx-1,rty, x+(9*8),y+(5*8), 5,3)  
   -- stairs up to hall
@@ -258,7 +277,8 @@ function draw_right_garden()
   -- upper wall
   map(grlx,rty, (garden_down.x+25)*8,(garden_down.y-21)*8, 1,4)
   -- workshed side
-  map(hrlx,rty, (garden_down.x+17)*8,(garden_down.y-24)*8, 1,5)
+  map(hrlx,rty, (garden_down.x+17)*8,(garden_down.y-24)*8, 1,4)
+  spr(33, (garden_down.x+17)*8,(garden_down.y-20)*8)
   -- upper right corner
   map(grrx-3,rty, (garden_down.x+20)*8,(garden_down.y-28)*8, 7,7)
   -- upper wall
@@ -268,7 +288,30 @@ function draw_right_garden()
 end
 
 function draw_upper_garden()
-  
+  -- upper left corner
+  map(grlx,rty, (garden_down.x-2)*8,(garden_down.y-28)*8, 4,7)
+  -- upper wall (left to right)
+  map(grlx+1,rty, (garden_down.x+2)*8,(garden_down.y-28)*8, 5,2)
+  map(grlx+1,rty, (garden_down.x+7)*8,(garden_down.y-28)*8, 5,2)
+  map(grlx+1,rty, (garden_down.x+12)*8,(garden_down.y-28)*8, 5,2)
+  -- left wall (up to down)
+  map(grlx,rty, (garden_down.x-2)*8,(garden_down.y-21)*8, 1,8)
+  map(grlx,rty, (garden_down.x-2)*8,(garden_down.y-13)*8, 1,8)
+  -- upper left shed corner
+  map(hrlx,rty, (garden_down.x+13)*8,(garden_down.y-24)*8, 4,3)
+  -- lower left shed corner
+  map(hrlx,rly+2, (garden_down.x+13)*8,(garden_down.y-21)*8, 2,2)
+  -- shed door
+  spr(35, (garden_down.x+15)*8,(garden_down.y-20)*8)
+  -- wall right of shed door
+  map(hrlx,rly+2, (garden_down.x+16)*8,(garden_down.y-21)*8, 1,2)
+
+  -- shed insides
+  if shed_visited then
+    -- todo draw floor
+  end
+ 
+  -- todo draw ground
 end
 
 function draw_left_garden()

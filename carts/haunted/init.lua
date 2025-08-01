@@ -13,7 +13,7 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y=170,180
+player_x,player_y=140,270
 player_z=1
 -- -2: temple
 -- -1: labyrinth
@@ -27,6 +27,7 @@ kitchen_visited=true
 bathroom_visited=true
 right_garden_visited=true
 upper_garden_discovered=true
+shed_visited=true
 left_garden_dicovered=true
 guest_room_visited=true
 toilet_visited=true
