@@ -152,23 +152,61 @@ function draw_ground_level()
 end
 
 function draw_front()
+  draw_gravel()
   draw_road()
 end
 
+function draw_gravel()
+  x,y=garden_down.x-4,garden_down.y+4
+  
+  -- top left
+  map(6,12, x*8,y*8, 12,1)
+  map(6,12, (x-2)*8,(y+1)*8, 14,1)
+  -- top center
+  map(6,12, (x+12)*8,y*8, 12,2)
+  --top right
+  map(6,12, (x+24)*8,y*8, 8,1)
+  map(6,12, (x+24)*8,(y+1)*8, 10,1)
+  -- middle left
+  map(6,12, (x-4)*8,(y+2)*8, 12,1)
+  map(6,12, (x-6)*8,(y+3)*8, 14,1)
+  -- middle center
+  map(6,12, (x+8)*8,(y+2)*8, 8,2)
+  map(6,12, (x+16)*8,(y+2)*8, 8,2)
+  -- middle right
+  map(6,12, (x+24)*8,(y+2)*8, 12,1)
+  map(6,12, (x+24)*8,(y+3)*8, 14,1)
+
+  -- low left
+  map(6,12, (x-8)*8,(y+4)*8, 12,1)
+  map(6,12, (x-10)*8,(y+5)*8, 14,1)
+  -- low center
+  map(6,12, (x+4)*8,(y+4)*8, 13,2)
+  map(6,12, (x+14)*8,(y+4)*8, 14,2)
+  -- low right
+  map(6,12, (x+28)*8,(y+4)*8, 12,1)
+  map(6,12, (x+28)*8,(y+5)*8, 14,1)
+  -- under road
+  map(6,12, (x-10)*8,(y+15)*8, 14,1)
+  map(6,12, (x+4)*8,(y+15)*8, 14,1)
+  map(6,12, (x+18)*8,(y+15)*8, 14,1)
+  map(6,12, (x+32)*8,(y+15)*8, 14,1)
+end
+
 function draw_road()
-  origin_x,origin_y=garden_down.x-10,garden_down.y+5
+  origin_x,origin_y=garden_down.x-15,garden_down.y+10
   -- top (left to right)
   map(6,11, origin_x*8,origin_y*8, 14,1)
   map(6,11, (origin_x+14)*8,origin_y*8, 14,1)
   map(6,11, (origin_x+28)*8,origin_y*8, 14,1)
   map(6,11, (origin_x+42)*8,origin_y*8, 14,1)
   -- middle (left to right)
-  map(6,10, origin_x*8,(origin_y+2)*8, 14,1)
-  map(6,10, (origin_x+14)*8,(origin_y+4)*8, 14,1)
+  map(6,10, (origin_x-2)*8,(origin_y+4)*8, 14,1)
+  map(6,10, (origin_x+13)*8,(origin_y+4)*8, 14,1)
   map(6,10, (origin_x+28)*8,(origin_y+4)*8, 14,1)
-  map(6,10, (origin_x+42)*8,(origin_y+4)*8, 14,1)
+  map(6,10, (origin_x+43)*8,(origin_y+4)*8, 14,1)
   -- bottom (left to right)
-  map(6,9, origin_x*8,(origin_y+2)*8, 14,1)
+  map(6,9, origin_x*8,(origin_y+8)*8, 14,1)
   map(6,9, (origin_x+14)*8,(origin_y+8)*8, 14,1)
   map(6,9, (origin_x+28)*8,(origin_y+8)*8, 14,1)
   map(6,9, (origin_x+42)*8,(origin_y+8)*8, 14,1)

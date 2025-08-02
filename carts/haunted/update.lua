@@ -28,8 +28,8 @@ function update_game()
  if player_z<-2 or player_z>3 then player_z=old_z end
  -- end dev map design code
  
- if btn(⬅️) then player_x-=1
- elseif btn(➡️) then player_x+=1
- elseif btn(⬆️) then player_y-=1
- elseif btn(⬇️) then player_y+=1 end
+ if btn(⬅️) then player_x-=player_speed
+ elseif btn(➡️) then player_x+=player_speed
+ elseif btn(⬆️) then player_y-=player_speed
+ elseif btn(⬇️) then player_y+=player_speed end
 end
