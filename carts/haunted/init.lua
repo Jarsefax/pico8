@@ -13,7 +13,7 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y,player_speed=140,270,3
+player_x,player_y,player_speed=210,330,3
 player_z=1
 -- -2: temple
 -- -1: labyrinth

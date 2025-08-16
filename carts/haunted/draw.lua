@@ -152,8 +152,45 @@ function draw_ground_level()
 end
 
 function draw_front()
+  draw_woods()
   draw_gravel()
   draw_road()
+end
+
+function draw_woods()
+  x,y=garden_down.x-4,garden_down.y+2
+
+  -- left outline (right to left, top to bottom)
+  map(grlx+1,rty, x*8,y*8, 2,2)
+  map(grlx,rly+1, (x-1)*8,y*8, 1,3)
+  map(grlx+1,rty, (x-2)*8,(y+1)*8, 1,2)
+  map(grlx,rly+1, (x-3)*8,(y+1)*8, 1,3)
+  map(grlx+1,rty, (x-4)*8,(y+2)*8, 1,2)
+  map(grlx,rly+1, (x-5)*8,(y+2)*8, 1,3)
+  map(grlx+1,rty, (x-6)*8,(y+3)*8, 1,2)
+  map(grlx,rly+1, (x-7)*8,(y+3)*8, 1,3)
+  map(grlx+1,rty, (x-8)*8,(y+4)*8, 1,2)
+  map(grlx,rly+1, (x-9)*8,(y+4)*8, 1,3)
+  map(grlx+1,rty, (x-10)*8,(y+5)*8, 1,2)
+  map(grlx,rly+2, (x-15)*8,(y+5)*8, 5,2)
+  map(grlx,rly+2, (x-19)*8,(y+5)*8, 5,2)
+  -- todo: left fill
+  
+  -- right outline (left to right, top to bottom)
+  map(grlx+1,rty, (x+30)*8,y*8, 2,2)
+  map(grlx,rly+1, (x+32)*8,y*8, 1,3)
+  map(grlx+1,rty, (x+33)*8,(y+1)*8, 1,2)
+  map(grlx,rly+1, (x+34)*8,(y+1)*8, 1,3)
+  map(grlx+1,rty, (x+35)*8,(y+2)*8, 1,2)
+  map(grlx,rly+1, (x+36)*8,(y+2)*8, 1,3)
+  map(grlx+1,rty, (x+37)*8,(y+3)*8, 1,2)
+  map(grlx,rly+1, (x+38)*8,(y+3)*8, 1,3)
+  map(grlx+1,rty, (x+39)*8,(y+4)*8, 1,2)
+  map(grlx,rly+1, (x+40)*8,(y+4)*8, 1,3)
+  map(grlx+1,rty, (x+41)*8,(y+5)*8, 1,2)
+  map(grlx,rly+2, (x+42)*8,(y+5)*8, 5,2)
+  map(grlx,rly+2, (x+47)*8,(y+5)*8, 5,2)
+  -- todo: right fill
 end
 
 function draw_gravel()
@@ -180,36 +217,43 @@ function draw_gravel()
   -- low left
   map(6,12, (x-8)*8,(y+4)*8, 12,1)
   map(6,12, (x-10)*8,(y+5)*8, 14,1)
+  map(6,12, (x-18)*8,(y+5)*8, 8,1)
   -- low center
   map(6,12, (x+4)*8,(y+4)*8, 13,2)
   map(6,12, (x+14)*8,(y+4)*8, 14,2)
   -- low right
   map(6,12, (x+28)*8,(y+4)*8, 12,1)
   map(6,12, (x+28)*8,(y+5)*8, 14,1)
+  map(6,12, (x+42)*8,(y+5)*8, 10,1)
   -- under road
-  map(6,12, (x-10)*8,(y+15)*8, 14,1)
-  map(6,12, (x+4)*8,(y+15)*8, 14,1)
-  map(6,12, (x+18)*8,(y+15)*8, 14,1)
-  map(6,12, (x+32)*8,(y+15)*8, 14,1)
+  map(6,12, (x-28)*8,(y+15)*8, 14,1)
+  map(6,12, (x-14)*8,(y+15)*8, 14,1)
+  map(6,12, x*8,(y+15)*8, 14,1)
+  map(6,12, (x+14)*8,(y+15)*8, 14,1)
+  map(6,12, (x+28)*8,(y+15)*8, 14,1)
+  map(6,12, (x+42)*8,(y+15)*8, 14,1)
 end
 
 function draw_road()
-  origin_x,origin_y=garden_down.x-15,garden_down.y+10
+  origin_x,origin_y=garden_down.x-20,garden_down.y+10
   -- top (left to right)
-  map(6,11, origin_x*8,origin_y*8, 14,1)
-  map(6,11, (origin_x+14)*8,origin_y*8, 14,1)
-  map(6,11, (origin_x+28)*8,origin_y*8, 14,1)
-  map(6,11, (origin_x+42)*8,origin_y*8, 14,1)
+  map(6,11, (origin_x-2)*8,origin_y*8, 14,1)
+  map(6,11, (origin_x+12)*8,origin_y*8, 14,1)
+  map(6,11, (origin_x+26)*8,origin_y*8, 14,1)
+  map(6,11, (origin_x+40)*8,origin_y*8, 14,1)
+  map(6,11, (origin_x+54)*8,origin_y*8, 14,1)
   -- middle (left to right)
   map(6,10, (origin_x-2)*8,(origin_y+4)*8, 14,1)
-  map(6,10, (origin_x+13)*8,(origin_y+4)*8, 14,1)
-  map(6,10, (origin_x+28)*8,(origin_y+4)*8, 14,1)
-  map(6,10, (origin_x+43)*8,(origin_y+4)*8, 14,1)
+  map(6,10, (origin_x+9)*8,(origin_y+4)*8, 14,1)
+  map(6,10, (origin_x+24)*8,(origin_y+4)*8, 14,1)
+  map(6,10, (origin_x+39)*8,(origin_y+4)*8, 14,1)
+  map(6,10, (origin_x+53)*8,(origin_y+4)*8, 14,1)
   -- bottom (left to right)
-  map(6,9, origin_x*8,(origin_y+8)*8, 14,1)
-  map(6,9, (origin_x+14)*8,(origin_y+8)*8, 14,1)
-  map(6,9, (origin_x+28)*8,(origin_y+8)*8, 14,1)
-  map(6,9, (origin_x+42)*8,(origin_y+8)*8, 14,1)
+  map(6,9, (origin_x-2)*8,(origin_y+8)*8, 14,1)
+  map(6,9, (origin_x+12)*8,(origin_y+8)*8, 14,1)
+  map(6,9, (origin_x+26)*8,(origin_y+8)*8, 14,1)
+  map(6,9, (origin_x+40)*8,(origin_y+8)*8, 14,1)
+  map(6,9, (origin_x+54)*8,(origin_y+8)*8, 14,1)
 end
 
 function draw_entre()
