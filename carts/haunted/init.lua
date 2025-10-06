@@ -13,8 +13,8 @@ menu_state=0
 endings={false,false,false,false}
 
 --game
-player_x,player_y,player_speed=210,330,3
-player_z=1
+player_x,player_y,player_speed=70,190,3
+player_z=0
 -- -2: temple
 -- -1: labyrinth
 --  0: cellar
@@ -29,6 +29,9 @@ right_garden_visited=true
 upper_garden_discovered=true
 shed_visited=true
 left_garden_dicovered=true
+stairs_to_labyrinth_visited=true
+earth_cellar_visited=true
+back_room_visited=false
 guest_room_visited=true
 toilet_visited=true
 bedroom_visited=true

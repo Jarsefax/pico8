@@ -12,6 +12,9 @@ hrlx,hrrx=8,12
 grlx,grrx=0,4
 --garden_room_left_x
 --garden_room_right_x
+srlx,srrx=16,22
+--sublevel_room_left_x
+--sublevel_room_right_x
 gx,gy=24,2
 -- ground_x,ground_y
 
@@ -117,13 +120,33 @@ function draw_labyrinth_level()
 end
 
 function draw_cellar_level()
- -- stairs up to lobby
- x,y=lobby_cellar.x*8,lobby_cellar.y*8
- map(sux,suy,x,y,2,1)
+ if earth_cellar_visited then
+  -- stairs up to lobby
+  x,y=lobby_cellar.x*8,lobby_cellar.y*8
+  map(sux,suy,x,y,2,1)
 
- -- stairs between garden and labyrinth
- x,y=garden_down.x*8,garden_down.y*8
- map(sdx,sdy,x,y,2,1)
+  draw_earth_cellar()
+ end
+
+ if stairs_to_labyrinth_visited then
+  -- stairs between garden and labyrinth
+  x,y=garden_down.x*8,garden_down.y*8
+  map(sdx,sdy,x,y,2,1)
+ end
+end
+
+function draw_earth_cellar()
+  x,y=lobby_cellar.x-2,lobby_cellar.y-7
+
+  -- top left corner
+  map(srlx,rty, x*8,y*8, 6,7)
+  -- bottom left corner
+  map(srlx,rly, x*8,(y+7)*8, 6,4)
+  
+  -- top right corner
+  map(srrx-3,rty, (x+7)*8,y*8, 4,7)
+  -- bottom right corner
+  map(srrx-4,rty+5, (x+6)*8,(y+7)*8, 5,4)
 end
 
 function draw_ground_level()
