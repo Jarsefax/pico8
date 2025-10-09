@@ -126,6 +126,9 @@ function draw_cellar_level()
   map(sux,suy,x,y,2,1)
 
   draw_earth_cellar()
+  if back_room_visited then
+    draw_back_room()
+  end
  end
 
  if stairs_to_labyrinth_visited then
@@ -133,6 +136,16 @@ function draw_cellar_level()
   x,y=garden_down.x*8,garden_down.y*8
   map(sdx,sdy,x,y,2,1)
  end
+end
+
+function draw_back_room()
+  x,y=lobby_cellar.x+1,lobby_cellar.y-12
+
+  -- top left corner
+  map(srlx,rty, x*8,y*8, 4,5)
+
+  -- top right corner
+  map(srrx-2,rty, (x+4)*8,y*8, 3,5)
 end
 
 function draw_earth_cellar()
@@ -147,6 +160,17 @@ function draw_earth_cellar()
   map(srrx-3,rty, (x+7)*8,y*8, 4,7)
   -- bottom right corner
   map(srrx-4,rty+5, (x+6)*8,(y+7)*8, 5,4)
+
+  -- back room door
+  spr(35, (x+6)*8,(y+1)*8)
+  -- floor behind back room door
+  if back_room_visited then
+    spr(50, (x+6)*8,(y)*8)
+  else
+    --rectfill(x+8,y-(3*8), x+16,y-(2*8), 0)
+  end
+
+  -- todo draw floor
 end
 
 function draw_ground_level()
