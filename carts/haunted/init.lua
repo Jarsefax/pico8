@@ -14,7 +14,7 @@ endings={false,false,false,false}
 
 --game
 player_x,player_y,player_speed=70,190,3
-player_z=0
+player_z=3
 -- -2: temple
 -- -1: labyrinth
 --  0: cellar

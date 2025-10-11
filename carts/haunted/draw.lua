@@ -646,7 +646,7 @@ function draw_office(left,bottom)
  -- top
  x=left+24
  for i=1,3 do
-  map(map_x,map_y,x,y,3,1)
+  map(map_x+1,map_y,x,y,3,2)
   x+=24
  end
  
@@ -684,7 +684,24 @@ function draw_office(left,bottom)
  end
  
  -- todo: draw floor
- 
+ floor_y=bottom-56
+ for i=1,6 do
+  floor_x=left
+  floor_y=floor_y+8
+  for j=1,13 do
+    floor_x=floor_x+8
+    spr(34, floor_x, floor_y)
+  end
+ end
+ for k=1,2 do
+  floor_x=floor_x-56
+  floor_y=floor_y+8
+  for l=1,7 do
+    floor_x=floor_x+8
+    spr(34, floor_x, floor_y)
+  end
+ end
+
  return x,y
 end
 
