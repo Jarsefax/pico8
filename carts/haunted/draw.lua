@@ -562,7 +562,9 @@ function draw_third_floor()
  end
 end
 
-function draw_alcove() 
+function draw_alcove()
+ -- todo: draw floor
+
  -- stairs
  stairs_x,stairs_y=hall_alcove.x*8,hall_alcove.y*8
  map(sdx,sdy,stairs_x,stairs_y,2,1) 
@@ -626,7 +628,6 @@ function draw_alcove()
  x,y=x-8,y-8
  map(map_x,map_y,x,y,1,1)
  
- -- todo: draw floor
  -- todo: draw shotgun
  
  return left,top
@@ -683,7 +684,7 @@ function draw_office(left,bottom)
   spr(33,x+32,y+8)
  end
  
- -- todo: draw floor
+ -- floor
  floor_y=bottom-56
  for i=1,6 do
   floor_x=left
@@ -727,5 +728,14 @@ function draw_secret_room(left,top)
  spr(34,x,top+8) -- floor
  spr(33,x-8,y) -- wall
  
- -- todo: draw floor
+ -- floor
+ floor_y=top+8
+ for i=1,4 do
+  floor_x=x-16
+  floor_y=floor_y+8
+  for j=1,3 do
+    floor_x=floor_x+8
+    spr(34, floor_x, floor_y)
+  end
+ end
 end
