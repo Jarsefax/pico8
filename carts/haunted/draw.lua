@@ -564,6 +564,15 @@ end
 
 function draw_alcove()
  -- todo: draw floor
+ for row=1,6 do
+  for col=1,5 do
+   if row == 5 then
+    -- d
+   else
+    -- 
+   end
+  end
+ end
 
  -- stairs
  stairs_x,stairs_y=hall_alcove.x*8,hall_alcove.y*8
@@ -574,7 +583,7 @@ function draw_alcove()
 
  -- lower left
  map_x,map_y=8,5
- map(map_x,map_y,left,stairs_y,3,4)
+ map(map_x,map_y,left,stairs_y,4,4)
   
  -- lower right
  map_x,map_y=12,5
@@ -610,23 +619,19 @@ function draw_alcove()
  y=y+8
  spr(35,x,y)
  
- -- bottom center wall
- map_x,map_y=10,6
- y=stairs_y+8
- map(map_x,map_y,x,y,1,3)
-
  -- center flooring
- map_y=4
- x=x+8
- map(map_x,map_y,x,stairs_y,1,1)
+--  map_y=4
+--  x=x+8
+--  map(map_x,map_y,x,stairs_y,1,1)
  
- for i=1,3 do
-  y=stairs_y-(i*8)
-  map(map_x,map_y,stairs_x,y,3,1)
- end
+--  for i=1,3 do
+--   y=stairs_y-(i*8)
+--   map(map_x,map_y,stairs_x,y,3,1)
+--   map(map_x,map_y,x,y,1,3)
+--  end
  
- x,y=x-8,y-8
- map(map_x,map_y,x,y,1,1)
+--  x,y=x-8,y-8
+--  map(map_x,map_y,x,y,1,1)
  
  -- todo: draw shotgun
  
